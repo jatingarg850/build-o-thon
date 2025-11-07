@@ -746,18 +746,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **📧 Email**: support@virtualchemlab.com
-- **💬 Discord**: [Join our community](https://discord.gg/virtualchemlab)
-- **🐛 Issues**: [GitHub Issues](https://github.com/yourusername/virtual-chemistry-lab/issues)
-- **📖 Docs**: [Full Documentation](https://docs.virtualchemlab.com)
+- **📧 Email**: deepankarpatel28@gmail.com
 
 ---
 
 <div align="center">
 
 **Made with ❤️ for chemistry education**
-
-[![GitHub stars](https://img.shields.io/github/stars/yourusername/virtual-chemistry-lab?style=social)](https://github.com/yourusername/virtual-chemistry-lab)
-[![Twitter Follow](https://img.shields.io/twitter/follow/virtualchemlab?style=social)](https://twitter.com/virtualchemlab)
-
 </div>
