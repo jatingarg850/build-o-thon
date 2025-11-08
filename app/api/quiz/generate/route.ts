@@ -5,14 +5,27 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
 
 export async function GET(request: NextRequest) {
   try {
-    const model = genAI.getGenerativeModel({ model: 'gemini-pro' })
+    const model = genAI.getGenerativeModel({ 
+      model: 'gemini-2.0-flash-exp',
+      generationConfig: {
+        temperature: 0.7,
+        topP: 0.95,
+        topK: 40,
+        maxOutputTokens: 2048,
+      }
+    })
     
-    const prompt = `Generate 5 chemistry reaction quiz questions. For each question:
+    const timestamp = Date.now()
+    const randomSeed = Math.random()
+    
+    const prompt = `Generate 5 UNIQUE chemistry reaction quiz questions (seed: ${randomSeed}). Make them different from typical textbook examples. For each question:
 1. Provide 2 reactants (chemical formulas)
 2. Ask what product is formed
 3. Provide 4 multiple choice options (one correct)
 4. Include a detailed explanation
 5. Assign points (10-20 based on difficulty)
+
+IMPORTANT: Generate DIFFERENT questions each time. Use varied reaction types and compounds.
 
 Format as JSON array with this structure:
 [

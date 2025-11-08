@@ -339,7 +339,7 @@ export default function MoleculesPage() {
                     }
                   }}
                 >
-                  <g transform={`scale(${zoom}) rotate(${rotation.y} 0 0) rotateX(${rotation.x})`}>
+                  <g transform={`scale(${zoom}) rotate(${rotation.y})`}>
                     {/* Bonds */}
                     {bonds.map(bond => {
                       const fromAtom = atoms.find(a => a.id === bond.from)

@@ -98,16 +98,25 @@ export default function QuizPage() {
   const loadQuestions = async () => {
     try {
       setLoading(true)
-      const response = await fetch('/api/quiz/generate')
+      // Add timestamp to prevent caching
+      const response = await fetch(`/api/quiz/generate?t=${Date.now()}`)
       const data = await response.json()
       
-      if (data.success && data.questions) {
+      if (data.success && data.questions && data.questions.length > 0) {
         setQuestions(data.questions)
         setAnsweredQuestions(new Array(data.questions.length).fill(false))
+      } else {
+        // If AI fails, use default questions but shuffle them
+        const shuffled = [...DAILY_QUESTIONS].sort(() => Math.random() - 0.5)
+        setQuestions(shuffled)
+        setAnsweredQuestions(new Array(shuffled.length).fill(false))
       }
     } catch (error) {
       console.error('Failed to load questions:', error)
-      // Use default questions on error
+      // Use shuffled default questions on error
+      const shuffled = [...DAILY_QUESTIONS].sort(() => Math.random() - 0.5)
+      setQuestions(shuffled)
+      setAnsweredQuestions(new Array(shuffled.length).fill(false))
     } finally {
       setLoading(false)
     }
@@ -126,7 +135,7 @@ export default function QuizPage() {
     setSelectedAnswer(answerIndex)
     setShowResult(true)
     
-    const question = DAILY_QUESTIONS[currentQuestion]
+    const question = questions[currentQuestion]
     const isCorrect = answerIndex === question.correctAnswer
     
     if (isCorrect) {
@@ -139,7 +148,7 @@ export default function QuizPage() {
   }
   
   const handleNext = () => {
-    if (currentQuestion < DAILY_QUESTIONS.length - 1) {
+    if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1)
       setSelectedAnswer(null)
       setShowResult(false)

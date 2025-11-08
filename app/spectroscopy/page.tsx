@@ -305,12 +305,61 @@ export default function SpectroscopyPage() {
                           })
                         })
                         const result = await response.json()
-                        if (result.success) {
-                          // You can add the generated data to the display here
-                          alert('AI analysis complete! (Feature in development)')
+                        if (result.success && result.data) {
+                          // Convert AI data to our format
+                          const aiData = result.data
+                          const newCompound = {
+                            name: customCompound,
+                            formula: customFormula,
+                            spectra: {
+                              uvVis: {
+                                data: Array.from({ length: 100 }, (_, i) => ({
+                                  x: 200 + i * 6,
+                                  y: Math.random() * 30 + 10
+                                })),
+                                peaks: aiData.uvVis?.peaks?.map((p: any) => ({
+                                  x: p.wavelength,
+                                  label: p.label
+                                })) || [],
+                                color: '#3B82F6'
+                              },
+                              ir: {
+                                data: Array.from({ length: 100 }, (_, i) => ({
+                                  x: 400 + i * 36,
+                                  y: Math.random() * 40 + 10
+                                })),
+                                peaks: aiData.ir?.peaks?.map((p: any) => ({
+                                  x: p.wavenumber,
+                                  label: p.label
+                                })) || [],
+                                color: '#EF4444'
+                              },
+                              nmr: {
+                                data: Array.from({ length: 100 }, (_, i) => ({
+                                  x: i * 0.1,
+                                  y: Math.random() * 20
+                                })),
+                                peaks: aiData.nmr?.peaks?.map((p: any) => ({
+                                  x: p.shift,
+                                  label: p.label
+                                })) || [],
+                                color: '#10B981'
+                              }
+                            }
+                          }
+                          
+                          // Add to compounds list and select it
+                          SAMPLE_COMPOUNDS.push(newCompound)
+                          setSelectedCompound(newCompound)
+                          setShowCustomInput(false)
+                          setCustomCompound('')
+                          setCustomFormula('')
+                        } else {
+                          alert('Failed to generate spectra. Please try again.')
                         }
                       } catch (error) {
                         console.error('Generation failed:', error)
+                        alert('Error generating spectra. Please check your input and try again.')
                       } finally {
                         setGenerating(false)
                       }

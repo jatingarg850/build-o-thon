@@ -7,7 +7,15 @@ export async function POST(request: NextRequest) {
   try {
     const { formula, atoms } = await request.json()
     
-    const model = genAI.getGenerativeModel({ model: 'gemini-pro' })
+    const model = genAI.getGenerativeModel({ 
+      model: 'gemini-2.0-flash-exp',
+      generationConfig: {
+        temperature: 0.7,
+        topP: 0.95,
+        topK: 40,
+        maxOutputTokens: 2048,
+      }
+    })
     
     const atomList = atoms.map((a: any) => a.element).join(', ')
     

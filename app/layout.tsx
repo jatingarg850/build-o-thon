@@ -16,6 +16,9 @@ export const metadata = {
     statusBarStyle: 'default',
     title: 'ChemLab',
   },
+  other: {
+    'mobile-web-app-capable': 'yes',
+  },
 }
 
 export const viewport = {

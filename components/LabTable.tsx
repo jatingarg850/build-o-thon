@@ -53,24 +53,23 @@ export default function LabTable({ onReaction, reactionResult, isReacting, onAdd
   }
 
   const addChemicalToGlassware = useCallback((chemical: Chemical, glasswareId: string) => {
-    if (!chemical || !chemical.name) {
-      console.error('Invalid chemical provided:', chemical)
+    // Validate chemical object
+    if (!chemical || typeof chemical !== 'object') {
+      console.warn('Invalid chemical object received')
       return
     }
     
-    console.log('=== LabTable: Adding chemical to glassware ===')
-    console.log('Chemical:', chemical.name)
-    console.log('Glassware ID:', glasswareId)
-    console.log('Opening quantity modal...')
+    if (!chemical.name || !chemical.formula) {
+      console.warn('Chemical missing required properties:', chemical)
+      return
+    }
     
-    // Open quantity modal instead of adding directly
+    // Open quantity modal
     setQuantityModal({
       chemical,
       glasswareId,
       isOpen: true
     })
-    
-    console.log('Modal state set to:', { chemical: chemical.name, glasswareId, isOpen: true })
   }, [])
 
   const handleQuantityConfirm = useCallback((chemical: Chemical, amount: number, unit: string) => {
@@ -106,24 +105,25 @@ export default function LabTable({ onReaction, reactionResult, isReacting, onAdd
   }, [])
 
   const handleAddChemicalToFirstTestTube = useCallback((chemical: Chemical) => {
-    // Check if chemical is valid
-    if (!chemical || !chemical.name) {
-      console.error('Invalid chemical provided:', chemical)
+    // Validate chemical object
+    if (!chemical || typeof chemical !== 'object') {
+      console.warn('Invalid chemical object for test tube')
+      return
+    }
+    
+    if (!chemical.name || !chemical.formula) {
+      console.warn('Chemical missing required properties for test tube')
       return
     }
     
     // Find the first test tube
     const firstTestTube = testTubes[0]
     if (firstTestTube) {
-      console.log('Adding chemical to first test tube:', chemical.name, 'to', firstTestTube.id)
-      // Open quantity modal for the first test tube
       setQuantityModal({
         chemical,
         glasswareId: firstTestTube.id,
         isOpen: true
       })
-    } else {
-      console.error('No test tubes available')
     }
   }, [testTubes])
 
