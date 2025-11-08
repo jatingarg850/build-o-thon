@@ -158,15 +158,15 @@ export default function LabPage() {
                 <div className="absolute w-96 h-96 bg-pink-500/20 rounded-full blur-3xl bottom-0 left-1/2 animate-pulse delay-2000"></div>
             </div>
 
-            {/* Navbar - Matching Home Page Theme */}
-            <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
+            {/* Navbar - Matching Features Page Theme */}
+            <header className="sticky top-0 z-50 w-full border-b border-white/20 bg-gradient-to-r from-white/10 to-white/5 backdrop-blur-2xl">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 items-center justify-between">
                         {/* Left: Back + Logo */}
                         <div className="flex items-center space-x-4">
                             <Link
                                 href="/"
-                                className="p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                                className="p-2 text-gray-300 hover:text-white hover:bg-gradient-to-r hover:from-purple-500/20 hover:to-pink-500/20 rounded-lg transition-all duration-300"
                                 title="Back to home"
                             >
                                 <ArrowLeft className="h-5 w-5" />
@@ -188,7 +188,7 @@ export default function LabPage() {
                             <button
                                 onClick={clearExperiment}
                                 disabled={!currentExperiment}
-                                className="p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="p-2 text-gray-300 hover:text-white hover:bg-gradient-to-r hover:from-purple-500/20 hover:to-pink-500/20 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                                 title="Clear experiment"
                             >
                                 <RotateCcw className="h-5 w-5" />
@@ -196,7 +196,7 @@ export default function LabPage() {
                             <button
                                 onClick={handleSave}
                                 disabled={!currentExperiment}
-                                className="p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="p-2 text-gray-300 hover:text-white hover:bg-gradient-to-r hover:from-purple-500/20 hover:to-pink-500/20 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                                 title="Save experiment"
                             >
                                 <Save className="h-5 w-5" />
@@ -204,7 +204,7 @@ export default function LabPage() {
                             <button
                                 onClick={handleExport}
                                 disabled={!currentExperiment}
-                                className="p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="p-2 text-gray-300 hover:text-white hover:bg-gradient-to-r hover:from-purple-500/20 hover:to-pink-500/20 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                                 title="Export PDF"
                             >
                                 <Download className="h-5 w-5" />
@@ -212,7 +212,7 @@ export default function LabPage() {
                             <button
                                 onClick={handleShare}
                                 disabled={!currentExperiment}
-                                className="p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="p-2 text-gray-300 hover:text-white hover:bg-gradient-to-r hover:from-purple-500/20 hover:to-pink-500/20 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                                 title="Share experiment"
                             >
                                 <Share2 className="h-5 w-5" />
