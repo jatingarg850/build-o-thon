@@ -62,7 +62,7 @@ export default function LabPage() {
 
     if (isCheckingAuth) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-indigo-950 flex items-center justify-center">
+            <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 flex items-center justify-center">
                 <div className="text-center">
                     <div className="relative w-16 h-24 mx-auto mb-4">
                         <img
@@ -150,7 +150,14 @@ export default function LabPage() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-indigo-950">
+        <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 relative overflow-hidden">
+            {/* Animated Background - Matching Features Page */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute w-96 h-96 bg-purple-500/20 rounded-full blur-3xl top-0 left-1/4 animate-pulse"></div>
+                <div className="absolute w-96 h-96 bg-blue-500/20 rounded-full blur-3xl top-1/3 right-1/4 animate-pulse delay-1000"></div>
+                <div className="absolute w-96 h-96 bg-pink-500/20 rounded-full blur-3xl bottom-0 left-1/2 animate-pulse delay-2000"></div>
+            </div>
+
             {/* Navbar - Matching Home Page Theme */}
             <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -222,7 +229,7 @@ export default function LabPage() {
                     initial={{ x: -100, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.5, delay: 0.1 }}
-                    className="h-full bg-slate-900/40 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+                    className="h-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl hover:border-white/40 transition-all duration-300 overflow-hidden flex flex-col"
                 >
                     {/* Header */}
                     <div className="flex-shrink-0 p-4 border-b border-white/10 bg-gradient-to-r from-blue-500/10 to-purple-500/10">
@@ -248,7 +255,7 @@ export default function LabPage() {
                     initial={{ y: 100, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
-                    className="h-full bg-slate-900/40 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+                    className="h-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl hover:border-white/40 transition-all duration-300 overflow-hidden flex flex-col"
                     ref={labTableRef}
                 >
                     {/* Header */}
@@ -296,7 +303,7 @@ export default function LabPage() {
                     initial={{ x: 100, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.5, delay: 0.3 }}
-                    className="h-full bg-slate-900/40 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+                    className="h-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl hover:border-white/40 transition-all duration-300 overflow-hidden flex flex-col"
                 >
                     {/* Header */}
                     <div className="flex-shrink-0 p-4 border-b border-white/10 bg-gradient-to-r from-purple-500/10 to-pink-500/10">
@@ -369,7 +376,7 @@ export default function LabPage() {
                         exit={{ opacity: 0, x: 100 }}
                         className="fixed bottom-28 right-8 z-40 w-64"
                     >
-                        <div className="bg-slate-900/90 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl p-4">
+                        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl hover:border-white/40 transition-all duration-300 p-4">
                             <h3 className="text-sm font-bold text-white mb-3">Quick Actions</h3>
                             <div className="space-y-2">
                                 <button className="w-full px-3 py-2 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/50 text-blue-300 rounded-lg text-sm transition-all text-left">

@@ -75,14 +75,14 @@ export default function QuizPage() {
   const [timeLeft, setTimeLeft] = useState(300) // 5 minutes
   const [loading, setLoading] = useState(true)
   const [generatingNew, setGeneratingNew] = useState(false)
-  
+
   useEffect(() => {
     loadQuestions()
   }, [])
-  
+
   useEffect(() => {
     if (quizCompleted || timeLeft <= 0) return
-    
+
     const timer = setInterval(() => {
       setTimeLeft(prev => {
         if (prev <= 1) {
@@ -92,17 +92,17 @@ export default function QuizPage() {
         return prev - 1
       })
     }, 1000)
-    
+
     return () => clearInterval(timer)
   }, [quizCompleted, timeLeft])
-  
+
   const loadQuestions = async () => {
     try {
       setLoading(true)
       // Add timestamp to prevent caching
       const response = await fetch(`/api/quiz/generate?t=${Date.now()}`)
       const data = await response.json()
-      
+
       if (data.success && data.questions && data.questions.length > 0) {
         setQuestions(data.questions)
         setAnsweredQuestions(new Array(data.questions.length).fill(false))
@@ -122,32 +122,32 @@ export default function QuizPage() {
       setLoading(false)
     }
   }
-  
+
   const generateNewQuiz = async () => {
     setGeneratingNew(true)
     await loadQuestions()
     resetQuiz()
     setGeneratingNew(false)
   }
-  
+
   const handleAnswer = (answerIndex: number) => {
     if (showResult) return
-    
+
     setSelectedAnswer(answerIndex)
     setShowResult(true)
-    
+
     const question = questions[currentQuestion]
     const isCorrect = answerIndex === question.correctAnswer
-    
+
     if (isCorrect) {
       setScore(score + question.points)
     }
-    
+
     const newAnswered = [...answeredQuestions]
     newAnswered[currentQuestion] = true
     setAnsweredQuestions(newAnswered)
   }
-  
+
   const handleNext = () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1)
@@ -157,7 +157,7 @@ export default function QuizPage() {
       setQuizCompleted(true)
     }
   }
-  
+
   const resetQuiz = () => {
     setCurrentQuestion(0)
     setSelectedAnswer(null)
@@ -167,10 +167,10 @@ export default function QuizPage() {
     setQuizCompleted(false)
     setTimeLeft(300)
   }
-  
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-indigo-950 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-gray-300 text-lg">Generating AI-powered quiz questions...</p>
@@ -178,46 +178,44 @@ export default function QuizPage() {
       </div>
     )
   }
-  
+
   const question = questions[currentQuestion]
   const totalPoints = questions.reduce((sum, q) => sum + q.points, 0)
   const percentage = Math.round((score / totalPoints) * 100)
-  
+
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60)
     const secs = seconds % 60
     return `${mins}:${secs.toString().padStart(2, '0')}`
   }
-  
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-indigo-950 relative overflow-hidden">
-      {/* Animated background */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 relative overflow-hidden">
+      {/* Animated background - matching features page */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute w-96 h-96 bg-blue-500/20 rounded-full blur-3xl -top-48 -left-48 animate-pulse"></div>
-        <div className="absolute w-96 h-96 bg-purple-500/20 rounded-full blur-3xl top-1/2 right-0 animate-pulse delay-1000"></div>
-        <div className="absolute w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl bottom-0 left-1/3 animate-pulse delay-2000"></div>
+        <div className="absolute w-96 h-96 bg-purple-500/20 rounded-full blur-3xl top-0 left-1/4 animate-pulse"></div>
+        <div className="absolute w-96 h-96 bg-blue-500/20 rounded-full blur-3xl top-1/3 right-1/4 animate-pulse delay-1000"></div>
+        <div className="absolute w-96 h-96 bg-pink-500/20 rounded-full blur-3xl bottom-0 left-1/2 animate-pulse delay-2000"></div>
       </div>
 
       {/* Modern Navbar */}
       <ModernNavbar />
-      
+
       <div className="relative z-10 max-w-4xl mx-auto px-6 py-8">
         {quizCompleted ? (
           // Results Screen
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 shadow-lg"
+            className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl p-8 hover:border-white/40 transition-all duration-300"
           >
             <div className="text-center mb-8">
-              <div className={`w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4 ${
-                percentage >= 70 ? 'bg-green-100 dark:bg-green-900/30' : 'bg-orange-100 dark:bg-orange-900/30'
-              }`}>
-                <Trophy className={`h-12 w-12 ${
-                  percentage >= 70 ? 'text-green-600' : 'text-orange-600'
-                }`} />
+              <div className={`w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4 ${percentage >= 70 ? 'bg-green-100 dark:bg-green-900/30' : 'bg-orange-100 dark:bg-orange-900/30'
+                }`}>
+                <Trophy className={`h-12 w-12 ${percentage >= 70 ? 'text-green-600' : 'text-orange-600'
+                  }`} />
               </div>
-              
+
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
                 Quiz Complete!
               </h2>
@@ -225,7 +223,7 @@ export default function QuizPage() {
                 {percentage >= 70 ? 'Great job!' : 'Keep practicing!'}
               </p>
             </div>
-            
+
             <div className="grid grid-cols-3 gap-4 mb-8">
               <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4 text-center">
                 <div className="text-3xl font-bold text-blue-600 mb-1">
@@ -235,7 +233,7 @@ export default function QuizPage() {
                   Points Earned
                 </div>
               </div>
-              
+
               <div className="bg-green-50 dark:bg-green-900/20 rounded-xl p-4 text-center">
                 <div className="text-3xl font-bold text-green-600 mb-1">
                   {percentage}%
@@ -244,7 +242,7 @@ export default function QuizPage() {
                   Score
                 </div>
               </div>
-              
+
               <div className="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-4 text-center">
                 <div className="text-3xl font-bold text-purple-600 mb-1">
                   {answeredQuestions.filter(Boolean).length}/{questions.length}
@@ -254,7 +252,7 @@ export default function QuizPage() {
                 </div>
               </div>
             </div>
-            
+
             <div className="flex justify-center space-x-4">
               <Link
                 href="/lab"
@@ -283,7 +281,7 @@ export default function QuizPage() {
             key={currentQuestion}
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 shadow-lg"
+            className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl p-8 hover:border-white/40 transition-all duration-300"
           >
             {/* Progress */}
             <div className="mb-8">
@@ -298,7 +296,7 @@ export default function QuizPage() {
                 />
               </div>
             </div>
-            
+
             {/* Reactants */}
             <div className="mb-6">
               <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">
@@ -319,12 +317,12 @@ export default function QuizPage() {
                 <span className="text-3xl text-gray-400">?</span>
               </div>
             </div>
-            
+
             {/* Question */}
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
               {question.question}
             </h2>
-            
+
             {/* Options */}
             <div className="space-y-3 mb-6">
               {question.options.map((option, index) => {
@@ -332,21 +330,20 @@ export default function QuizPage() {
                 const isCorrect = index === question.correctAnswer
                 const showCorrect = showResult && isCorrect
                 const showWrong = showResult && isSelected && !isCorrect
-                
+
                 return (
                   <button
                     key={index}
                     onClick={() => handleAnswer(index)}
                     disabled={showResult}
-                    className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
-                      showCorrect
-                        ? 'border-green-500 bg-green-50 dark:bg-green-900/20'
-                        : showWrong
+                    className={`w-full text-left p-4 rounded-xl border-2 transition-all ${showCorrect
+                      ? 'border-green-500 bg-green-50 dark:bg-green-900/20'
+                      : showWrong
                         ? 'border-red-500 bg-red-50 dark:bg-red-900/20'
                         : isSelected
-                        ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20'
-                        : 'border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-700'
-                    } ${showResult ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                          ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20'
+                          : 'border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-700'
+                      } ${showResult ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                   >
                     <div className="flex items-center justify-between">
                       <span className="text-gray-900 dark:text-white font-mono">
@@ -359,43 +356,40 @@ export default function QuizPage() {
                 )
               })}
             </div>
-            
+
             {/* Explanation */}
             <AnimatePresence>
               {showResult && (
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className={`p-4 rounded-xl mb-6 ${
-                    selectedAnswer === question.correctAnswer
-                      ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800'
-                      : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'
-                  }`}
+                  className={`p-4 rounded-xl mb-6 ${selectedAnswer === question.correctAnswer
+                    ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800'
+                    : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'
+                    }`}
                 >
-                  <h3 className={`font-bold mb-2 ${
-                    selectedAnswer === question.correctAnswer
-                      ? 'text-green-900 dark:text-green-100'
-                      : 'text-red-900 dark:text-red-100'
-                  }`}>
+                  <h3 className={`font-bold mb-2 ${selectedAnswer === question.correctAnswer
+                    ? 'text-green-900 dark:text-green-100'
+                    : 'text-red-900 dark:text-red-100'
+                    }`}>
                     {selectedAnswer === question.correctAnswer ? 'Correct!' : 'Incorrect'}
                   </h3>
-                  <p className={`text-sm ${
-                    selectedAnswer === question.correctAnswer
-                      ? 'text-green-800 dark:text-green-200'
-                      : 'text-red-800 dark:text-red-200'
-                  }`}>
+                  <p className={`text-sm ${selectedAnswer === question.correctAnswer
+                    ? 'text-green-800 dark:text-green-200'
+                    : 'text-red-800 dark:text-red-200'
+                    }`}>
                     {question.explanation}
                   </p>
                 </motion.div>
               )}
             </AnimatePresence>
-            
+
             {/* Navigation */}
             <div className="flex justify-between">
               <div className="text-sm text-gray-600 dark:text-gray-400">
                 Current Score: <span className="font-bold text-blue-600">{score}</span> points
               </div>
-              
+
               {showResult && (
                 <button
                   onClick={handleNext}

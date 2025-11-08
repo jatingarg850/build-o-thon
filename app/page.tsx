@@ -9,12 +9,39 @@ import AuthButton from '@/components/AuthButton'
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-indigo-950 relative overflow-hidden">
-      {/* Animated background */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 relative overflow-hidden">
+      {/* Animated background - matching features page */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute w-96 h-96 bg-blue-500/20 rounded-full blur-3xl -top-48 -left-48 animate-pulse"></div>
-        <div className="absolute w-96 h-96 bg-purple-500/20 rounded-full blur-3xl top-1/2 right-0 animate-pulse delay-1000"></div>
-        <div className="absolute w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl bottom-0 left-1/3 animate-pulse delay-2000"></div>
+        <motion.div
+          className="absolute w-full h-full"
+        >
+          <div className="absolute w-96 h-96 bg-purple-500/20 rounded-full blur-3xl top-0 left-1/4 animate-pulse"></div>
+          <div className="absolute w-96 h-96 bg-blue-500/20 rounded-full blur-3xl top-1/3 right-1/4 animate-pulse delay-1000"></div>
+          <div className="absolute w-96 h-96 bg-pink-500/20 rounded-full blur-3xl bottom-0 left-1/2 animate-pulse delay-2000"></div>
+        </motion.div>
+      </div>
+
+      {/* Floating Particles - matching features page */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-white/20 rounded-full"
+            initial={{
+              x: typeof window !== 'undefined' ? Math.random() * window.innerWidth : Math.random() * 1920,
+              y: typeof window !== 'undefined' ? Math.random() * window.innerHeight : Math.random() * 1080
+            }}
+            animate={{
+              y: [null, Math.random() * -100 - 50],
+              opacity: [0, 1, 0]
+            }}
+            transition={{
+              duration: Math.random() * 3 + 2,
+              repeat: Infinity,
+              delay: Math.random() * 2
+            }}
+          />
+        ))}
       </div>
 
       {/* Modern Navbar */}
@@ -124,20 +151,33 @@ export default function HomePage() {
             ].map((feature, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                initial={{ opacity: 0, y: 50, rotateX: -15 }}
+                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                transition={{
+                  duration: 0.6,
+                  delay: index * 0.1,
+                  type: 'spring',
+                  stiffness: 100
+                }}
                 viewport={{ once: true }}
                 className="group relative"
               >
-                <div className="absolute inset-0 bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl"
-                  style={{ background: `linear-gradient(to right, var(--tw-gradient-stops))` }}></div>
-                <div className="relative h-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300">
-                  <div className={`w-12 h-12 bg-gradient-to-r ${feature.gradient} rounded-xl flex items-center justify-center mb-4`}>
-                    <feature.icon className="h-6 w-6 text-white" />
+                {/* Glow effect - matching features page */}
+                <motion.div
+                  className={`absolute -inset-1 bg-gradient-to-r ${feature.gradient} rounded-3xl blur-xl opacity-0 group-hover:opacity-75 transition-opacity duration-500`}
+                />
+
+                {/* Card - matching features page */}
+                <div className="relative h-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl p-8 hover:border-white/40 transition-all duration-300 overflow-hidden">
+                  <div className={`w-16 h-16 bg-gradient-to-r ${feature.gradient} rounded-2xl flex items-center justify-center mb-6`}>
+                    <feature.icon className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-2">{feature.title}</h3>
-                  <p className="text-gray-400">{feature.description}</p>
+                  <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-purple-200 group-hover:bg-clip-text transition-all duration-300">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
+                    {feature.description}
+                  </p>
                 </div>
               </motion.div>
             ))}
@@ -148,7 +188,7 @@ export default function HomePage() {
       {/* Stats Section */}
       <section className="relative z-10 py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-12">
+          <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl p-12 hover:border-white/40 transition-all duration-300">
             <div className="grid md:grid-cols-4 gap-8 text-center">
               {[
                 { value: '10K+', label: 'Active Users' },
@@ -211,7 +251,7 @@ export default function HomePage() {
                 ].map((item, index) => (
                   <div
                     key={index}
-                    className="flex-shrink-0 w-48 h-32 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300 group"
+                    className="flex-shrink-0 w-48 h-32 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 hover:border-white/40 transition-all duration-300 group"
                   >
                     <div className={`text-4xl mb-3 group-hover:scale-110 transition-transform duration-300`}>
                       {item.emoji}
@@ -243,7 +283,7 @@ export default function HomePage() {
                 ].map((item, index) => (
                   <div
                     key={index}
-                    className="flex-shrink-0 w-48 h-32 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300 group"
+                    className="flex-shrink-0 w-48 h-32 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 hover:border-white/40 transition-all duration-300 group"
                   >
                     <div className={`text-4xl mb-3 group-hover:scale-110 transition-transform duration-300`}>
                       {item.emoji}

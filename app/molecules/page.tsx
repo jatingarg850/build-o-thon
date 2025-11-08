@@ -103,17 +103,17 @@ export default function MoleculesPage() {
   const [moleculeName, setMoleculeName] = useState('Custom Molecule')
   const [analysis, setAnalysis] = useState<any>(null)
   const [analyzing, setAnalyzing] = useState(false)
-  
+
   const loadMolecule = (molecule: typeof COMMON_MOLECULES[0]) => {
     setAtoms(molecule.atoms)
     setBonds(molecule.bonds)
     setMoleculeName(molecule.name)
   }
-  
+
   const addAtom = () => {
     const element = ELEMENTS.find(e => e.symbol === selectedElement)
     if (!element) return
-    
+
     const newAtom: Atom = {
       id: `atom-${Date.now()}`,
       element: element.symbol,
@@ -124,24 +124,24 @@ export default function MoleculesPage() {
     }
     setAtoms([...atoms, newAtom])
   }
-  
+
   const removeAtom = (id: string) => {
     setAtoms(atoms.filter(a => a.id !== id))
     setBonds(bonds.filter(b => b.from !== id && b.to !== id))
   }
-  
+
   const clearAll = () => {
     setAtoms([])
     setBonds([])
     setMoleculeName('Custom Molecule')
   }
-  
+
   const getMolecularFormula = () => {
     const elementCounts: Record<string, number> = {}
     atoms.forEach(atom => {
       elementCounts[atom.element] = (elementCounts[atom.element] || 0) + 1
     })
-    
+
     return Object.entries(elementCounts)
       .sort(([a], [b]) => {
         // C first, then H, then alphabetical
@@ -154,10 +154,10 @@ export default function MoleculesPage() {
       .map(([element, count]) => `${element}${count > 1 ? count : ''}`)
       .join('')
   }
-  
+
   const analyzeMolecule = async () => {
     if (atoms.length === 0) return
-    
+
     setAnalyzing(true)
     try {
       const formula = getMolecularFormula()
@@ -166,7 +166,7 @@ export default function MoleculesPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ formula, atoms })
       })
-      
+
       const data = await response.json()
       if (data.success) {
         setAnalysis(data.analysis)
@@ -177,25 +177,25 @@ export default function MoleculesPage() {
       setAnalyzing(false)
     }
   }
-  
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-indigo-950 relative overflow-hidden">
-      {/* Animated background */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 relative overflow-hidden">
+      {/* Animated background - matching features page */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute w-96 h-96 bg-blue-500/20 rounded-full blur-3xl -top-48 -left-48 animate-pulse"></div>
-        <div className="absolute w-96 h-96 bg-purple-500/20 rounded-full blur-3xl top-1/2 right-0 animate-pulse delay-1000"></div>
-        <div className="absolute w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl bottom-0 left-1/3 animate-pulse delay-2000"></div>
+        <div className="absolute w-96 h-96 bg-purple-500/20 rounded-full blur-3xl top-0 left-1/4 animate-pulse"></div>
+        <div className="absolute w-96 h-96 bg-blue-500/20 rounded-full blur-3xl top-1/3 right-1/4 animate-pulse delay-1000"></div>
+        <div className="absolute w-96 h-96 bg-pink-500/20 rounded-full blur-3xl bottom-0 left-1/2 animate-pulse delay-2000"></div>
       </div>
 
       {/* Modern Navbar */}
       <ModernNavbar />
-      
+
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Sidebar */}
           <div className="lg:col-span-1 space-y-6">
             {/* Element Selector */}
-            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-lg">
+            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 hover:border-white/40 transition-all duration-300">
               <h2 className="text-lg font-bold text-white mb-4">
                 Elements
               </h2>
@@ -204,13 +204,12 @@ export default function MoleculesPage() {
                   <button
                     key={element.symbol}
                     onClick={() => setSelectedElement(element.symbol)}
-                    className={`p-3 rounded-lg border-2 transition-all ${
-                      selectedElement === element.symbol
-                        ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20'
-                        : 'border-gray-200 dark:border-gray-700 hover:border-blue-300'
-                    }`}
+                    className={`p-3 rounded-lg border-2 transition-all ${selectedElement === element.symbol
+                      ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20'
+                      : 'border-gray-200 dark:border-gray-700 hover:border-blue-300'
+                      }`}
                   >
-                    <div 
+                    <div
                       className="w-8 h-8 rounded-full mx-auto mb-1 flex items-center justify-center text-white font-bold text-sm"
                       style={{ backgroundColor: element.color }}
                     >
@@ -222,7 +221,7 @@ export default function MoleculesPage() {
                   </button>
                 ))}
               </div>
-              
+
               <button
                 onClick={addAtom}
                 className="w-full mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors flex items-center justify-center space-x-2"
@@ -231,9 +230,9 @@ export default function MoleculesPage() {
                 <span>Add Atom</span>
               </button>
             </div>
-            
+
             {/* Common Molecules */}
-            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-lg">
+            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 hover:border-white/40 transition-all duration-300">
               <h2 className="text-lg font-bold text-white mb-4">
                 Common Molecules
               </h2>
@@ -255,10 +254,10 @@ export default function MoleculesPage() {
               </div>
             </div>
           </div>
-          
+
           {/* Main Viewer */}
           <div className="lg:col-span-3">
-            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-lg">
+            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 hover:border-white/40 transition-all duration-300">
               {/* Controls */}
               <div className="flex items-center justify-between mb-6">
                 <div>
@@ -271,7 +270,7 @@ export default function MoleculesPage() {
                     </p>
                   )}
                 </div>
-                
+
                 <div className="flex items-center space-x-2">
                   {atoms.length > 0 && (
                     <button
@@ -308,9 +307,9 @@ export default function MoleculesPage() {
                   </button>
                 </div>
               </div>
-              
+
               {/* 3D Viewer */}
-              <div 
+              <div
                 className="relative bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-xl overflow-hidden"
                 style={{ height: '500px' }}
               >
@@ -334,7 +333,7 @@ export default function MoleculesPage() {
                       const fromAtom = atoms.find(a => a.id === bond.from)
                       const toAtom = atoms.find(a => a.id === bond.to)
                       if (!fromAtom || !toAtom) return null
-                      
+
                       return (
                         <line
                           key={bond.id}
@@ -348,7 +347,7 @@ export default function MoleculesPage() {
                         />
                       )
                     })}
-                    
+
                     {/* Atoms */}
                     {atoms.map(atom => (
                       <g key={atom.id}>
@@ -378,7 +377,7 @@ export default function MoleculesPage() {
                     ))}
                   </g>
                 </svg>
-                
+
                 {atoms.length === 0 && (
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="text-center">
@@ -390,7 +389,7 @@ export default function MoleculesPage() {
                   </div>
                 )}
               </div>
-              
+
               {/* Info */}
               <div className="mt-6 grid grid-cols-3 gap-4">
                 <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 text-center">
@@ -401,7 +400,7 @@ export default function MoleculesPage() {
                     Atoms
                   </div>
                 </div>
-                
+
                 <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 text-center">
                   <div className="text-2xl font-bold text-green-600 mb-1">
                     {bonds.length}
@@ -410,7 +409,7 @@ export default function MoleculesPage() {
                     Bonds
                   </div>
                 </div>
-                
+
                 <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 text-center">
                   <div className="text-2xl font-bold text-purple-600 mb-1">
                     {new Set(atoms.map(a => a.element)).size}
@@ -420,14 +419,14 @@ export default function MoleculesPage() {
                   </div>
                 </div>
               </div>
-              
+
               {/* AI Analysis Results */}
               {analysis && (
                 <div className="mt-6 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-xl p-6 border-2 border-purple-200 dark:border-purple-800">
                   <h3 className="text-xl font-bold text-purple-900 dark:text-purple-100 mb-4">
                     AI Analysis Results
                   </h3>
-                  
+
                   <div className="space-y-4">
                     <div>
                       <h4 className="font-semibold text-gray-900 dark:text-white mb-1">Name</h4>
@@ -436,7 +435,7 @@ export default function MoleculesPage() {
                         <p className="text-sm text-gray-600 dark:text-gray-400">IUPAC: {analysis.iupacName}</p>
                       )}
                     </div>
-                    
+
                     {analysis.properties && (
                       <div>
                         <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Properties</h4>
@@ -452,7 +451,7 @@ export default function MoleculesPage() {
                         </div>
                       </div>
                     )}
-                    
+
                     {analysis.uses && analysis.uses.length > 0 && (
                       <div>
                         <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Uses</h4>

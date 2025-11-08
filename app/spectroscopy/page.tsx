@@ -158,7 +158,7 @@ export default function SpectroscopyPage() {
   const [customFormula, setCustomFormula] = useState('')
   const [generating, setGenerating] = useState(false)
   const [showCustomInput, setShowCustomInput] = useState(false)
-  
+
   const getSpectrumData = () => {
     switch (selectedType) {
       case 'uv-vis':
@@ -171,28 +171,28 @@ export default function SpectroscopyPage() {
         return selectedCompound.spectra.uvVis
     }
   }
-  
+
   const spectrum = getSpectrumData()
   const spectType = SPECTROSCOPY_TYPES.find(t => t.id === selectedType)!
-  
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-indigo-950 relative overflow-hidden">
-      {/* Animated background */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 relative overflow-hidden">
+      {/* Animated background - matching features page */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute w-96 h-96 bg-blue-500/20 rounded-full blur-3xl -top-48 -left-48 animate-pulse"></div>
-        <div className="absolute w-96 h-96 bg-purple-500/20 rounded-full blur-3xl top-1/2 right-0 animate-pulse delay-1000"></div>
-        <div className="absolute w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl bottom-0 left-1/3 animate-pulse delay-2000"></div>
+        <div className="absolute w-96 h-96 bg-purple-500/20 rounded-full blur-3xl top-0 left-1/4 animate-pulse"></div>
+        <div className="absolute w-96 h-96 bg-blue-500/20 rounded-full blur-3xl top-1/3 right-1/4 animate-pulse delay-1000"></div>
+        <div className="absolute w-96 h-96 bg-pink-500/20 rounded-full blur-3xl bottom-0 left-1/2 animate-pulse delay-2000"></div>
       </div>
 
       {/* Modern Navbar */}
       <ModernNavbar />
-      
+
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Sidebar */}
           <div className="lg:col-span-1 space-y-6">
             {/* Spectroscopy Type */}
-            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-lg">
+            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 hover:border-white/40 transition-all duration-300">
               <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
                 Analysis Type
               </h2>
@@ -203,11 +203,10 @@ export default function SpectroscopyPage() {
                     <button
                       key={type.id}
                       onClick={() => setSelectedType(type.id)}
-                      className={`w-full text-left p-3 rounded-lg border-2 transition-all ${
-                        selectedType === type.id
-                          ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20'
-                          : 'border-gray-200 dark:border-gray-700 hover:border-blue-300'
-                      }`}
+                      className={`w-full text-left p-3 rounded-lg border-2 transition-all ${selectedType === type.id
+                        ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20'
+                        : 'border-gray-200 dark:border-gray-700 hover:border-blue-300'
+                        }`}
                     >
                       <div className="flex items-center space-x-3">
                         <div className={`p-2 rounded-lg bg-gradient-to-br ${type.color}`}>
@@ -227,9 +226,9 @@ export default function SpectroscopyPage() {
                 })}
               </div>
             </div>
-            
+
             {/* Sample Selection */}
-            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-lg">
+            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 hover:border-white/40 transition-all duration-300">
               <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
                 Sample
               </h2>
@@ -241,11 +240,10 @@ export default function SpectroscopyPage() {
                       setSelectedCompound(compound)
                       setShowCustomInput(false)
                     }}
-                    className={`w-full text-left p-3 rounded-lg border-2 transition-all ${
-                      selectedCompound.name === compound.name && !showCustomInput
-                        ? 'border-purple-600 bg-purple-50 dark:bg-purple-900/20'
-                        : 'border-gray-200 dark:border-gray-700 hover:border-purple-300'
-                    }`}
+                    className={`w-full text-left p-3 rounded-lg border-2 transition-all ${selectedCompound.name === compound.name && !showCustomInput
+                      ? 'border-purple-600 bg-purple-50 dark:bg-purple-900/20'
+                      : 'border-gray-200 dark:border-gray-700 hover:border-purple-300'
+                      }`}
                   >
                     <div className="font-medium text-gray-900 dark:text-white text-sm">
                       {compound.name}
@@ -256,14 +254,14 @@ export default function SpectroscopyPage() {
                   </button>
                 ))}
               </div>
-              
+
               <button
                 onClick={() => setShowCustomInput(!showCustomInput)}
                 className="w-full mt-4 px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-lg transition-colors text-sm font-medium"
               >
                 {showCustomInput ? 'Hide Custom' : 'Analyze Custom Compound'}
               </button>
-              
+
               {showCustomInput && (
                 <div className="mt-4 space-y-3">
                   <input
@@ -288,9 +286,9 @@ export default function SpectroscopyPage() {
                         const response = await fetch('/api/spectroscopy/generate', {
                           method: 'POST',
                           headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify({ 
-                            compound: customCompound, 
-                            formula: customFormula 
+                          body: JSON.stringify({
+                            compound: customCompound,
+                            formula: customFormula
                           })
                         })
                         const result = await response.json()
@@ -336,7 +334,7 @@ export default function SpectroscopyPage() {
                               }
                             }
                           }
-                          
+
                           // Add to compounds list and select it
                           SAMPLE_COMPOUNDS.push(newCompound)
                           setSelectedCompound(newCompound)
@@ -362,10 +360,10 @@ export default function SpectroscopyPage() {
               )}
             </div>
           </div>
-          
+
           {/* Main Viewer */}
           <div className="lg:col-span-3">
-            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-lg">
+            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 hover:border-white/40 transition-all duration-300">
               {/* Info */}
               <div className="mb-6">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
@@ -385,7 +383,7 @@ export default function SpectroscopyPage() {
                   </div>
                 </div>
               </div>
-              
+
               {/* Spectrum Display */}
               <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-xl p-6 mb-6">
                 <svg
@@ -417,11 +415,11 @@ export default function SpectroscopyPage() {
                       />
                     </g>
                   ))}
-                  
+
                   {/* Axes */}
                   <line x1={80} y1={360} x2={760} y2={360} stroke="#374151" strokeWidth="2" />
                   <line x1={80} y1={40} x2={80} y2={360} stroke="#374151" strokeWidth="2" />
-                  
+
                   {/* Spectrum Line */}
                   <path
                     d={spectrum.data.map((point, i) => {
@@ -433,7 +431,7 @@ export default function SpectroscopyPage() {
                     stroke={spectrum.color}
                     strokeWidth="3"
                   />
-                  
+
                   {/* Peak Labels */}
                   {spectrum.peaks.map((peak, i) => {
                     const xPos = 80 + (peak.x / (spectrum.data[spectrum.data.length - 1]?.x || 10)) * 680
@@ -462,7 +460,7 @@ export default function SpectroscopyPage() {
                       </g>
                     )
                   })}
-                  
+
                   {/* Labels */}
                   <text
                     x={420}
@@ -487,7 +485,7 @@ export default function SpectroscopyPage() {
                   </text>
                 </svg>
               </div>
-              
+
               {/* Peak Information */}
               {spectrum.peaks.length > 0 && (
                 <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4 border border-blue-200 dark:border-blue-800">

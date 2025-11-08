@@ -122,12 +122,12 @@ export default function EquipmentPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-indigo-950 relative overflow-hidden">
-      {/* Animated background */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 relative overflow-hidden">
+      {/* Animated background - matching features page */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute w-96 h-96 bg-blue-500/20 rounded-full blur-3xl -top-48 -left-48 animate-pulse"></div>
-        <div className="absolute w-96 h-96 bg-purple-500/20 rounded-full blur-3xl top-1/2 right-0 animate-pulse delay-1000"></div>
-        <div className="absolute w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl bottom-0 left-1/3 animate-pulse delay-2000"></div>
+        <div className="absolute w-96 h-96 bg-purple-500/20 rounded-full blur-3xl top-0 left-1/4 animate-pulse"></div>
+        <div className="absolute w-96 h-96 bg-blue-500/20 rounded-full blur-3xl top-1/3 right-1/4 animate-pulse delay-1000"></div>
+        <div className="absolute w-96 h-96 bg-pink-500/20 rounded-full blur-3xl bottom-0 left-1/2 animate-pulse delay-2000"></div>
       </div>
 
       {/* Modern Navbar */}
@@ -135,15 +135,15 @@ export default function EquipmentPage() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-8">
         {/* Filter */}
-        <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-lg mb-6">
+        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 hover:border-white/40 transition-all duration-300 mb-6">
           <div className="flex flex-wrap gap-3">
             {categories.map(cat => (
               <button
                 key={cat}
                 onClick={() => setFilterCategory(cat)}
                 className={`px-4 py-2 rounded-lg transition-colors ${filterCategory === cat
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                   }`}
               >
                 {cat === 'all' ? 'All Equipment' : cat}
@@ -159,12 +159,17 @@ export default function EquipmentPage() {
             return (
               <motion.div
                 key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
-                className={`bg-white/10 backdrop-blur-xl border-2 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col ${item.inUse
-                    ? 'border-green-500'
-                    : 'border-transparent hover:border-blue-500'
+                initial={{ opacity: 0, y: 50, rotateX: -15 }}
+                animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                transition={{
+                  duration: 0.6,
+                  delay: index * 0.05,
+                  type: 'spring',
+                  stiffness: 100
+                }}
+                className={`group relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl border-2 rounded-3xl p-6 hover:border-white/40 transition-all duration-300 flex flex-col ${item.inUse
+                  ? 'border-green-500'
+                  : 'border-white/20'
                   }`}
               >
                 <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center mb-4 mx-auto`}>
@@ -206,8 +211,8 @@ export default function EquipmentPage() {
                 <button
                   onClick={() => toggleEquipment(item.id)}
                   className={`w-full px-4 py-2 rounded-lg transition-colors mt-auto ${item.inUse
-                      ? 'bg-red-600 hover:bg-red-700 text-white'
-                      : 'bg-green-600 hover:bg-green-700 text-white'
+                    ? 'bg-red-600 hover:bg-red-700 text-white'
+                    : 'bg-green-600 hover:bg-green-700 text-white'
                     }`}
                 >
                   {item.inUse ? 'Turn Off' : 'Turn On'}
