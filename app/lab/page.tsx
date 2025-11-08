@@ -9,7 +9,6 @@ import LabTable from '@/components/LabTable'
 import ChemicalShelf from '@/components/ChemicalShelf'
 import ReactionPanel from '@/components/ReactionPanel'
 import ExperimentControls from '@/components/ExperimentControls'
-import FeaturesPanel from '@/components/features/FeaturesPanel'
 import { useDragScroll } from '@/hooks/useDragScroll'
 import { useAuth } from '@/contexts/AuthContext'
 import { Experiment, ReactionResult } from '@/types/chemistry'
@@ -218,9 +217,6 @@ export default function LabPage() {
           </div>
         </div>
       </div>
-      
-      {/* Features Panel */}
-      <FeaturesPanel />
     </div>
   )
 }

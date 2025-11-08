@@ -11,157 +11,49 @@ import {
 
 const features = [
   {
-    id: 'gamification',
-    title: 'Gamification System',
-    description: 'Earn XP, unlock achievements, and level up as you experiment',
-    icon: Trophy,
-    status: 'active',
-    color: 'from-purple-500 to-pink-500',
-    path: '/lab'
-  },
-  {
-    id: 'challenges',
-    title: 'Daily Challenges',
-    description: 'Complete daily chemistry challenges for bonus rewards',
-    icon: Target,
-    status: 'active',
-    color: 'from-blue-500 to-cyan-500',
-    path: '/lab'
-  },
-  {
-    id: 'notebook',
-    title: 'Lab Notebook',
-    description: 'Document your experiments with digital lab notes',
-    icon: BookOpen,
-    status: 'active',
-    color: 'from-green-500 to-emerald-500',
-    path: '/notebook'
-  },
-  {
     id: 'collaboration',
     title: 'Real-Time Collaboration',
-    description: 'Work together with classmates in shared lab sessions',
+    description: 'Work together with other users in shared lab sessions. See reactions in real-time and collaborate on experiments.',
     icon: Users,
     status: 'active',
     color: 'from-orange-500 to-red-500',
     path: '/collaborate'
   },
   {
-    id: 'analytics',
-    title: 'Analytics Dashboard',
-    description: 'Track your progress with detailed statistics',
-    icon: BarChart3,
+    id: 'challenges',
+    title: 'Daily Reaction Quiz',
+    description: 'Predict chemical reactions and earn points. New challenges every day to test your chemistry knowledge.',
+    icon: Target,
     status: 'active',
-    color: 'from-indigo-500 to-purple-500',
-    path: '/analytics'
-  },
-  {
-    id: 'marketplace',
-    title: 'Experiment Marketplace',
-    description: 'Share and discover experiments from the community',
-    icon: ShoppingBag,
-    status: 'active',
-    color: 'from-pink-500 to-rose-500',
-    path: '/marketplace'
-  },
-  {
-    id: 'safety',
-    title: 'Safety Training',
-    description: 'Complete interactive safety certification',
-    icon: Shield,
-    status: 'active',
-    color: 'from-yellow-500 to-orange-500',
-    path: '/safety'
-  },
-  {
-    id: 'curriculum',
-    title: 'Curriculum Integration',
-    description: 'Pre-designed lessons aligned with educational standards',
-    icon: GraduationCap,
-    status: 'active',
-    color: 'from-teal-500 to-green-500',
-    path: '/curriculum'
-  },
-  {
-    id: 'multilang',
-    title: 'Multi-Language Support',
-    description: 'Use the lab in your preferred language',
-    icon: Globe,
-    status: 'coming-soon',
-    color: 'from-blue-500 to-indigo-500',
-    path: '#'
-  },
-  {
-    id: 'equipment',
-    title: 'Advanced Equipment',
-    description: 'Bunsen burners, centrifuges, pH meters, and more',
-    icon: Beaker,
-    status: 'coming-soon',
-    color: 'from-cyan-500 to-blue-500',
-    path: '#'
-  },
-  {
-    id: 'spectroscopy',
-    title: 'Spectroscopy Tools',
-    description: 'UV-Vis, IR, NMR, and mass spectrometry simulations',
-    icon: Microscope,
-    status: 'coming-soon',
-    color: 'from-violet-500 to-purple-500',
-    path: '#'
+    color: 'from-blue-500 to-cyan-500',
+    path: '/quiz'
   },
   {
     id: 'molecular',
     title: 'Molecular Modeling',
-    description: '3D molecule builder and visualization',
+    description: 'Visualize molecular reactions in 3D. Build molecules and see how they interact at the atomic level.',
     icon: Atom,
-    status: 'coming-soon',
+    status: 'active',
     color: 'from-fuchsia-500 to-pink-500',
-    path: '#'
+    path: '/molecules'
   },
   {
-    id: 'video',
-    title: 'Video Recording',
-    description: 'Record and share your experiment process',
-    icon: Video,
-    status: 'coming-soon',
-    color: 'from-red-500 to-orange-500',
-    path: '#'
+    id: 'equipment',
+    title: 'Advanced Equipment',
+    description: 'Access professional lab equipment including Bunsen burners, centrifuges, pH meters, and more.',
+    icon: Beaker,
+    status: 'active',
+    color: 'from-cyan-500 to-blue-500',
+    path: '/equipment'
   },
   {
-    id: 'peer-review',
-    title: 'Peer Review System',
-    description: 'Get feedback from other chemists',
-    icon: GitBranch,
-    status: 'coming-soon',
-    color: 'from-emerald-500 to-teal-500',
-    path: '#'
-  },
-  {
-    id: 'offline',
-    title: 'Offline Mode (PWA)',
-    description: 'Use the lab without internet connection',
-    icon: Wifi,
-    status: 'coming-soon',
-    color: 'from-slate-500 to-gray-500',
-    path: '#'
-  },
-  {
-    id: 'inventory',
-    title: 'Chemical Inventory',
-    description: 'Track and manage your chemical supplies',
-    icon: Package,
-    status: 'coming-soon',
-    color: 'from-amber-500 to-yellow-500',
-    path: '#'
-  },
-  {
-    id: 'ar-vr',
-    title: 'AR/VR Experience',
-    description: 'Immersive 3D lab environment',
-    icon: Zap,
-    status: 'coming-soon',
-    color: 'from-lime-500 to-green-500',
-    path: '#'
+    id: 'spectroscopy',
+    title: 'Spectroscopy Tools',
+    description: 'Analyze substances using UV-Vis, IR, NMR, and mass spectrometry simulations.',
+    icon: Microscope,
+    status: 'active',
+    color: 'from-violet-500 to-purple-500',
+    path: '/spectroscopy'
   }
 ]
 
