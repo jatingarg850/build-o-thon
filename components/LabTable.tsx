@@ -14,9 +14,11 @@ interface LabTableProps {
   reactionResult: ReactionResult | null
   isReacting: boolean
   onAddChemicalToTestTube?: (callback: (chemical: Chemical) => void) => void
+  onAddTestTube?: (callback: () => void) => void
+  onAddBeaker?: (callback: () => void) => void
 }
 
-export default function LabTable({ onReaction, reactionResult, isReacting, onAddChemicalToTestTube }: LabTableProps) {
+export default function LabTable({ onReaction, reactionResult, isReacting, onAddChemicalToTestTube, onAddTestTube, onAddBeaker }: LabTableProps) {
   const [testTubes, setTestTubes] = useState<Array<{ id: string; contents: ChemicalContent[] }>>([
     { id: 'tube-1', contents: [] },
     { id: 'tube-2', contents: [] }
@@ -133,6 +135,27 @@ export default function LabTable({ onReaction, reactionResult, isReacting, onAdd
       onAddChemicalToTestTube(handleAddChemicalToFirstTestTube)
     }
   }, [handleAddChemicalToFirstTestTube, onAddChemicalToTestTube])
+
+  // Expose add functions globally for the buttons (fallback)
+  useEffect(() => {
+    (window as any).__addTestTube = addTestTube;
+    (window as any).__addBeaker = addBeaker;
+    
+    return () => {
+      delete (window as any).__addTestTube;
+      delete (window as any).__addBeaker;
+    }
+  }, [addTestTube, addBeaker])
+
+  // Register add functions with parent component
+  useEffect(() => {
+    if (onAddTestTube) {
+      onAddTestTube(() => addTestTube)
+    }
+    if (onAddBeaker) {
+      onAddBeaker(() => addBeaker)
+    }
+  }, [addTestTube, addBeaker, onAddTestTube, onAddBeaker])
 
   const clearGlassware = (glasswareId: string) => {
     setTestTubes(prev => prev.map(tube =>
